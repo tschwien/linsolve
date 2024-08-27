@@ -31,4 +31,4 @@ jobs:
         run: npm ci
 
       - name: Execute Unit Tests
-        run: npm run test:unit
+        run: npm run test
