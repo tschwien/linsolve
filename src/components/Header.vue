@@ -1,24 +1,33 @@
 <script>
 import { languageStore } from '../businesslogic/languageStore.js';
+import { useDropdownStore} from '../businesslogic/dropdownStore.js'
 export default {
   name: "Header",
-  data() {
-   return{
-    languageStore,
-   }
+  setup(){
+    const i18nStore = languageStore();
+    const dropdown = useDropdownStore();
+    return {i18nStore, dropdown};
   },
-  
 
+  methods: {
+    changeLocale(locale){
+        this.i18nStore.setLocale(locale);
+    },
+    toggleLanguageDropdown(){
+      this.dropdown.toggleDropdown();
+    }
+  }
 };
 </script>
 
 <template>
   <header class="header">
     <h1 class="title">LinSolve</h1>
-    <img src="../assets/globe.png" alt="language selection" class="globe"  @click="languageStore.toggleDropdown()">
-    <div v-if="languageStore.dropdownOpen" class="dropdown-menu">
-       <a class="dropdown-link">Deutsch</a>
-       <a class="dropdown-link">English</a>
+    <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
+    <p>{{ $t('language') }}</p>
+    <div v-if="dropdown.isOpen" class="dropdown-menu">
+       <p class="dropdown-link" @click="changeLocale('de')">Deutsch</p>
+       <p class="dropdown-link" @click="changeLocale('en')">English</p>
     </div>
   </header>
       
