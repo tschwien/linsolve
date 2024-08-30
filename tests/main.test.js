@@ -2,6 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { createApp } from 'vue';
 import { mount } from '@vue/test-utils';
 import App from '../src/main.js';
+import { createPinia } from 'pinia';
+import i18n from '../src/businesslogic/i18n.js';
 
 describe('App Initialization', () => {
     let app;
@@ -9,6 +11,8 @@ describe('App Initialization', () => {
     beforeEach(() => {
         // Create the app instance  for each subtest
         app = createApp(App);
+        app.use(createPinia());
+        app.use(i18n)
     });
 
     it('should create and mount the Vue app', () => {
