@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@vue/test-utils": "^2.4.6",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "pinia": "^2.2.2",
+    "vue-i18n": "^9.14.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
