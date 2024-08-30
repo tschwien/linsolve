@@ -1,8 +1,17 @@
-import { reactive } from "vue";
-export const languageStore= reactive({
-    dropdownOpen:false,
-    toggleDropdown(){
-        this.dropdownOpen = !this.dropdownOpen; // Toggle the dropdown state
-    }
+import { defineStore } from 'pinia';
+import i18n from './i18n';
 
-})
+export  const languageStore = defineStore('i18n', {
+  state: () => ({
+    locale: i18n.global.locale,  
+   
+  }),
+  actions: {
+    
+    setLocale(locale) {
+      this.locale = locale;
+      i18n.global.locale = locale;  
+    },
+  },
+});
+

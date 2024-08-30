@@ -5,9 +5,9 @@
 </script>
 <template>
     <footer class="footer">
-        <a class="footer-link">Dokumentation</a>
-        <a class="footer-link">Über uns</a>
-        <a class="footer-link">AGB</a>
+        <a class="footer-link">{{ $t('documentation') }}</a>
+        <a class="footer-link">{{ $t('aboutUs') }}</a>
+        <a class="footer-link">{{ $t('gtcs') }}</a>
     </footer>
 </template>
 <style>
