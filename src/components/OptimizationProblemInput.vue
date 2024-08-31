@@ -7,7 +7,7 @@ export default {
     name: 'OptimizationProblemInput',
     setup() {
         const optimizationStore = useOptimizationStore();
-
+        mathVirtualKeyboard.layouts = ["compact"];
         const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
         const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
 
@@ -16,8 +16,10 @@ export default {
             isMinimizationSelected,
             isMaximizationSelected,
         };
-    }
+    },
+    
 };
+ 
 </script>
 
 <template>
@@ -38,16 +40,17 @@ export default {
         </div>
 
         <div class="conditionContainer">
-            <math-field class="condition"></math-field>
+            <math-field class="condition" :placeholder="$t('condition')"></math-field>
         </div>
 
         <div id="constraintContainer">
-            <math-field class="constraint"></math-field>
-            <math-field class="constraint"></math-field>
+            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
+            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
             <math-field 
                 v-for="constraint in optimizationStore.constraints" 
                 :key="constraint.id"
                 class="constraint"
+                :placeholder="$t('constraint')"
                 @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
             </math-field>
         </div>
