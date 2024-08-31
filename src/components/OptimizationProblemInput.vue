@@ -1,22 +1,21 @@
 <script>
 import 'mathlive';
+import { useOptimizationStore } from '../businesslogic/optimizationStore';
+import { computed } from 'vue';
 
 export default {
     name: 'OptimizationProblemInput',
-    data() {
+    setup() {
+        const optimizationStore = useOptimizationStore();
+
+        const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
+        const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
+
         return {
-            selectedOptimization: 'minimization' // Standardmäßig auf 'minimization' gesetzt
+            optimizationStore,
+            isMinimizationSelected,
+            isMaximizationSelected,
         };
-    },
-    methods: {
-        selectOptimization(option) {
-            this.selectedOptimization = option;
-        },
-        addConstraint() {
-            const constraintField = document.createElement('math-field');
-            constraintField.classList.add('constraint');
-            document.getElementById('constraintContainer').appendChild(constraintField);
-        }
     }
 };
 </script>
@@ -26,14 +25,14 @@ export default {
         <div class="firstRow">
             <button 
                 class="selectionOptimization" 
-                :class="{ selected: selectedOptimization === 'minimization' }"
-                @click="selectOptimization('minimization')">
+                :class="{ selected: isMinimizationSelected }"
+                @click="optimizationStore.selectOptimization('minimization')">
                 {{ $t('minimization') }}
             </button>
             <button 
                 class="selectionOptimization" 
-                :class="{ selected: selectedOptimization === 'maximization' }"
-                @click="selectOptimization('maximization')">
+                :class="{ selected: isMaximizationSelected }"
+                @click="optimizationStore.selectOptimization('maximization')">
                 {{ $t('maximization') }}
             </button>
         </div>
@@ -45,17 +44,22 @@ export default {
         <div id="constraintContainer">
             <math-field class="constraint"></math-field>
             <math-field class="constraint"></math-field>
-            <math-field class="constraint"></math-field>
+            <math-field 
+                v-for="constraint in optimizationStore.constraints" 
+                :key="constraint.id"
+                class="constraint"
+                @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+            </math-field>
         </div>
 
         <div class="lastRow">
-            <button class="mainButton" @click="addConstraint()">{{ $t('addConstraint') }}</button>
+            <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
             <button class="mainButton">{{ $t('solve') }}</button>
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 .inputContainer {
   display: flex;
   flex-direction: column;
