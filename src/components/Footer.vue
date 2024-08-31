@@ -31,5 +31,9 @@
     padding: 1rem;
     color: white;
 }
+.footer-link:hover {
+  color: #f1f1f1;
+  font-weight: bolder;
+}
 
 </style>
