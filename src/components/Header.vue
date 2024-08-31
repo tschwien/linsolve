@@ -24,7 +24,7 @@ export default {
   <header class="header">
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
-    <p>{{ $t('language') }}</p>
+    <p class="language">{{ $t('language') }}</p>
     <div v-if="dropdown.isOpen" class="dropdown-menu">
        <p class="dropdown-link" @click="changeLocale('de')">Deutsch</p>
        <p class="dropdown-link" @click="changeLocale('en')">English</p>
@@ -51,7 +51,9 @@ export default {
   color: white;            
   z-index: 1000;           
 }
-
+.language{
+  padding-left: 3px;
+}
 .title {
   font-size: 2rem;        
   text-align: center;  
