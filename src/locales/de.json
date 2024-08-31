@@ -2,5 +2,12 @@
     "language":"DE",
     "documentation": "Dokumentation", 
     "aboutUs": "Über uns", 
-    "gtcs":"AGB"
+    "gtcs":"AGB",
+    "minimization":"Minimierung", 
+    "maximization": "Maximierung", 
+    "condition": "Bedingung",
+    "constraint": "Nebenbedingung", 
+    "addConstraint": "Neue Nebenbedingung", 
+    "solve": "Lösen"
+
 }

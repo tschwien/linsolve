@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vue/test-utils": "^2.4.6",
+    "mathlive": "^0.101.0",
     "pinia": "^2.2.2",
     "vue": "^3.4.37",
     "vue-i18n": "^9.14.0"
