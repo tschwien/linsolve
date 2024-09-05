@@ -1,20 +1,32 @@
+
 <script>
-import { languageStore } from '../businesslogic/languageStore.js';
-import { useDropdownStore} from '../businesslogic/dropdownStore.js'
+import { languageStore } from '../businesslogic/languageStore.js'; 
+import { useDropdownStore } from '../businesslogic/dropdownStore.js'; 
 export default {
-  name: "Header",
+  name: "Header", 
+
+  // `setup` function is part of Vue's Composition API to set up reactive state and logic
   setup(){
+    // Accessing the language store to manage localization (i18n)
     const i18nStore = languageStore();
+
+    // Accessing the dropdown store to manage the state of the language dropdown
     const dropdown = useDropdownStore();
-    return {i18nStore, dropdown};
+
+   
+    return { i18nStore, dropdown };
   },
 
+ 
   methods: {
+    // Method to change the current language (locale) by calling the `setLocale` action from the language store
     changeLocale(locale){
-        this.i18nStore.setLocale(locale);
+      this.i18nStore.setLocale(locale); // Updates the locale in both the store and the i18n instance
     },
+
+    // Method to toggle the state of the language dropdown menu by calling `toggleDropdown` action from the dropdown store
     toggleLanguageDropdown(){
-      this.dropdown.toggleDropdown();
+      this.dropdown.toggleDropdown(); 
     }
   }
 };
