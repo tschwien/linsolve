@@ -19,10 +19,10 @@ describe.skip('Component', () => {
 
 
         // Check if the Header component is rendered
-       // expect(wrapper.findComponent(Header).exists()).toBe(true);
+        expect(wrapper.findComponent(Header).exists()).toBe(true);
 
         // Check if the Footer component is rendered
-        //expect(wrapper.findComponent(Footer).exists()).toBe(true);
+        expect(wrapper.findComponent(Footer).exists()).toBe(true);
     });
 
 });

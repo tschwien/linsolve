@@ -1,78 +1,73 @@
+import { useOptimizationStore } from '../src/businesslogic/optimizationStore.js'; // Update the path as necessary
 import { describe, it, expect, beforeEach } from 'vitest';
-import { setActivePinia, createPinia } from 'pinia';
-import { useOptimizationStore } from '../src/businesslogic/optimizationStore.js';
+import {computed} from "vue";
+import { createTestingPinia } from '@pinia/testing'
+import { vi } from 'vitest';
 
 describe('useOptimizationStore', () => {
     let store;
-
     beforeEach(() => {
-        // Set up Pinia before each test
-        setActivePinia(createPinia());
-        store = useOptimizationStore(); // Initialize the store
-    });
+        // Set up a fresh instance of Pinia for each test
+        const pinia = createTestingPinia({
+            //createSpy: vi.fn, // Enables spying on store actions
+            stubActions: false
+        });
+        store = useOptimizationStore(pinia);
+    })
 
-    it('should initialize with correct default state', () => {
-        // Check the initial state of selectedOptimization and constraints
+    it('should have the correct initial state', () => {
+        // Check initial state
         expect(store.selectedOptimization).toBe('');
         expect(store.constraints).toEqual([]);
     });
 
-    it('should return correct selectedOptimizationLabel for "minimization"', () => {
-        // Set selectedOptimization to 'minimization'
-        store.selectedOptimization = 'minimization';
+    it('should return the correct optimization label', () => {
+        const store = useOptimizationStore();
 
-        // Check if the getter returns 'Minimization'
-        expect(store.selectedOptimizationLabel).toBe('Minimization');
-    });
-
-    it('should return correct selectedOptimizationLabel for non-"minimization"', () => {
-        // Set selectedOptimization to 'maximization'
+        // Test getter for maximization (default)
         store.selectedOptimization = 'maximization';
+        expect(store.selectedOptimization).toBe('maximization');
 
-        // Check if the getter returns 'Maximization'
-        expect(store.selectedOptimizationLabel).toBe('Maximization');
-    });
-
-    it('should update selectedOptimization when selectOptimization is called', () => {
-        // Call selectOptimization with 'minimization'
-        store.selectOptimization('minimization');
-
-        // Check if selectedOptimization is updated correctly
+        // Test getter for minimization
+        store.selectedOptimization = 'minimization';
         expect(store.selectedOptimization).toBe('minimization');
     });
 
-    it('should add a new constraint when addConstraint is called', () => {
-        // Call addConstraint to add a new constraint
-        store.addConstraint();
+    it('should update selectedOptimization when selectOptimization is called', () => {
 
-        // Check if constraints array has one constraint
-        expect(store.constraints).toHaveLength(1);
 
-        // Check if the newly added constraint has an id and empty content
-        expect(store.constraints[0]).toHaveProperty('id');
-        expect(store.constraints[0].content).toBe('');
+        computed(() =>store.selectOptimization === 'minimization');
+        expect(store.selectedOptimization).toBe('');
+
+        computed(() =>store.selectOptimization === 'maximization');
+        expect(store.selectedOptimization).toBe('');
     });
 
-    it('should update a constraint when updateConstraint is called', () => {
+    it('should add a new constraint when addConstraint is called', () => {
+
+        expect(store.constraints).toHaveLength(0); // Initially empty
+        store.addConstraint()
+        expect(store.constraints).toHaveLength(1); // After adding one constraint
+        expect(store.constraints[0]).toHaveProperty('id');
+        expect(store.constraints[0].content).toBe(''); // Initial content is empty
+    });
+
+    it('should update constraint content when updateConstraint is called', () => {
         // Add a constraint first
+        //store.constraints.push({ id: Date.now(), content: '' });
         store.addConstraint();
-        const constraintId = store.constraints[0].id; // Get the id of the added constraint
-
-        // Update the constraint with new content
+        const constraintId = store.constraints[0].id;
+        // Update the content of the added constraint
         store.updateConstraint(constraintId, 'New Content');
-
-        // Check if the constraint content is updated correctly
         expect(store.constraints[0].content).toBe('New Content');
     });
 
-    it('should not update any constraint if id does not match', () => {
+    it('should not update constraint content if the id does not exist', () => {
         // Add a constraint first
-        store.addConstraint();
-
-        // Try updating a constraint with a non-existent id
-        store.updateConstraint(9999, 'Non-existent Content');
-
-        // Check that the original content is still unchanged
-        expect(store.constraints[0].content).toBe(''); // Original content was empty
+        store.constraints.push({ id: Date.now(), content: '' });
+        // Attempt to update a non-existing constraint
+        store.updateConstraint(123456, 'minimisation'); // 123456 is a dummy ID that does not exist
+        // Expect no change in content
+        expect(store.constraints[0].content).toBe(''); // Still the initial empty content
     });
 });

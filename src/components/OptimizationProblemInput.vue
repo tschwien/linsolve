@@ -7,15 +7,12 @@ export default {
     name: 'OptimizationProblemInput', 
     setup() {
        // Accessing the store for optimization-related data
-        const optimizationStore = useOptimizationStore(); 
-
+        const optimizationStore = useOptimizationStore();
         // Configuring the MathLive virtual keyboard layout to use the "compact" option
         mathVirtualKeyboard.layouts = ["compact"];
-
         // Defining computed properties to determine whether the selected optimization is 'minimization' or 'maximization'
         const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
         const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
-        
         // Returning variables and computed properties to be used in the template or by other parts of the component
         return {
             optimizationStore, 
