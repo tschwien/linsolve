@@ -1,0 +1,12 @@
+{
+    "language":"EN",
+    "documentation": "Documentation", 
+    "aboutUs": "About us", 
+    "gtcs":"GTCs",
+    "minimization":"Minimization", 
+    "maximization": "Maximization",
+    "condition": "Condition",
+    "constraint": "Constraint", 
+    "addConstraint": "Add Constraint", 
+     "solve": "Solve"
+}
