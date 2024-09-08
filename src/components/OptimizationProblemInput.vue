@@ -23,50 +23,67 @@ export default {
 };
 </script>
 
-
 <template>
-    <div class="inputContainer">
-      
-        <div class="firstRow">
+  <div class="inputContainer">
+      <div class="firstRow">
           <p class="fieldDescription">{{ $t("optimizationType") }}</p>
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMinimizationSelected }"
-                @click="optimizationStore.selectOptimization('minimization')">
-                {{ $t('minimization') }}
-            </button>
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMaximizationSelected }"
-                @click="optimizationStore.selectOptimization('maximization')">
-                {{ $t('maximization') }}
-            </button>
-        </div>
+          <button 
+              class="selectionOptimization" 
+              :class="{ selected: isMinimizationSelected }"
+              @click="optimizationStore.selectOptimization('minimization')">
+              {{ $t('minimization') }}
+          </button>
+          <button 
+              class="selectionOptimization" 
+              :class="{ selected: isMaximizationSelected }"
+              @click="optimizationStore.selectOptimization('maximization')">
+              {{ $t('maximization') }}
+          </button>
+      </div>
 
-        <div class="conditionContainer">
-            <math-field class="condition" :placeholder="$t('condition')"></math-field>
-        </div>
+      <div class="conditionContainer">
+          <math-field class="condition" :placeholder="$t('condition')"></math-field>
+      </div>
 
-        <div id="constraintContainer">
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field 
-                v-for="constraint in optimizationStore.constraints" 
-                :key="constraint.id"
-                class="constraint"
-                :placeholder="$t('constraint')"
-                @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-            </math-field>
-        </div>
+      <div id="constraintContainer">
+      
+         <div class="constraintWrapper noIcon">
+            <math-field class="constraint originalConstraint" :placeholder="$t('constraint')"></math-field>
+         </div>
+         <div class="constraintWrapper noIcon">
+            <math-field class="constraint originalConstraint" :placeholder="$t('constraint')"></math-field>
+         </div>
 
-        <div class="lastRow">
-            <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-            <button class="mainButton">{{ $t('solve') }}</button>
-        </div>
-    </div>
+      
+          <div v-for="(constraint, index) in optimizationStore.constraints" 
+              :key="constraint.id" 
+              class="constraintWrapper">
+              <math-field 
+                  class="constraint addedConstraint"
+                  :placeholder="$t('constraint')"
+                  @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+              </math-field>
+              <img src="../assets/trash.png" class="deletingIcon" @click="optimizationStore.removeConstraint(constraint.id)">
+          </div>
+      </div>
+
+      <div class="lastRow">
+          <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+          <button class="mainButton">{{ $t('solve') }}</button>
+      </div>
+  </div>
 </template>
 
 <style scoped>
+
+.deletingIcon {
+  width: 20px; 
+  height: 20px;
+  cursor: pointer;
+  margin-left: 10px; 
+}
+
+
 .inputContainer {
   display: flex;
   flex-direction: column;
@@ -76,11 +93,13 @@ export default {
   margin: 0 auto;
   padding: 10px;
 }
-.fieldDescription{
+
+.fieldDescription {
   margin-right: 2%;
   font-size: small;
   font-weight: bold;
 }
+
 .firstRow {
   display: flex;
   justify-content: flex-end;
@@ -110,18 +129,35 @@ export default {
   align-items: center;
   width: 100%;
 }
-
-.condition {
+.condition{
   width: 90%;
+  max-width: 700px;
+}
+
+
+.constraintWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 70%; 
   max-width: 600px;
   margin-top: 10px;
+  box-sizing: border-box;
 }
 
-.constraint {
-  width: 70%;
-  max-width: 550px;
-  margin-top: 10px;
+
+.noIcon .originalConstraint {
+  margin-right: 30px; 
 }
+
+
+.originalConstraint,
+.addedConstraint {
+  flex-grow: 1; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
 
 .lastRow {
   display: flex;
@@ -141,3 +177,4 @@ export default {
   border-radius: 4px;
 }
 </style>
+
