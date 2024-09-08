@@ -63,7 +63,7 @@ export default {
                   :placeholder="$t('constraint')"
                   @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
               </math-field>
-              <img src="../assets/trash.png" class="deletingIcon" @click="optimizationStore.removeConstraint(constraint.id)">
+              <img src="../assets/trash.png" class="deletingIcon" @click="optimizationStore.deleteConstraint()">
           </div>
       </div>
 

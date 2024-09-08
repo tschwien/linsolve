@@ -27,6 +27,9 @@ export const useOptimizationStore = defineStore('optimization', {
         addConstraint() {
             this.constraints.push({ id: Date.now(), content: '' });
         },
+        deleteConstraint(){
+            this.constraints.pop()
+        },
 
         // Action to update the content of a specific constraint identified by its `id`
         updateConstraint(id, content) {
