@@ -26,7 +26,9 @@ export default {
 
 <template>
     <div class="inputContainer">
+      
         <div class="firstRow">
+          <p class="fieldDescription">{{ $t("optimizationType") }}</p>
             <button 
                 class="selectionOptimization" 
                 :class="{ selected: isMinimizationSelected }"
@@ -74,7 +76,11 @@ export default {
   margin: 0 auto;
   padding: 10px;
 }
-
+.fieldDescription{
+  margin-right: 2%;
+  font-size: small;
+  font-weight: bold;
+}
 .firstRow {
   display: flex;
   justify-content: flex-end;
