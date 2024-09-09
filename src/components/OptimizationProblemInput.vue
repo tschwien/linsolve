@@ -1,10 +1,16 @@
 <script>
 import 'mathlive'; 
 import { useOptimizationStore } from '../businesslogic/optimizationStore'; 
-import { computed } from 'vue'; 
+import { computed } from 'vue';
+import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 
 export default {
-    name: 'OptimizationProblemInput', 
+    name: 'OptimizationProblemInput',
+  computed: {
+    highsSolver() {
+      return highsSolver
+    }
+  },
     setup() {
        // Accessing the store for optimization-related data
         const optimizationStore = useOptimizationStore();
@@ -59,7 +65,7 @@ export default {
 
         <div class="lastRow">
             <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-            <button class="mainButton">{{ $t('solve') }}</button>
+            <button class="mainButton" @click ="highsSolver.solveLP()">{{ $t('solve') }}</button>
         </div>
     </div>
 </template>

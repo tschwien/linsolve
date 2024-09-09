@@ -2,7 +2,7 @@ import { useOptimizationStore } from '../src/businesslogic/optimizationStore.js'
 import { describe, it, expect, beforeEach } from 'vitest';
 import {computed} from "vue";
 import { createTestingPinia } from '@pinia/testing'
-import { vi } from 'vitest';
+
 
 describe('useOptimizationStore', () => {
     let store;
