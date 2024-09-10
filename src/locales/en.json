@@ -9,5 +9,6 @@
     "constraint": "Constraint", 
     "addConstraint": "Add Constraint", 
     "solve": "Solve",
-    "optimizationType":"Type of problem:"
-}
+    "optimizationType":"Type of problem:", 
+    "aboutUsText":"Hi, we are Hannah, Jona, Tom and Nele, a team of 5th semester Business Informatics students at Lingen University of Applied Sciences. As part of our programming project, we have developed LinSolve - the platform that helps you with mathematical problems in the field of Operations Research (OR). Our mission? To solve OR problems quickly and easily - without complicated tools. LinSolve helps you with linear equations, optimization problems and more, in an understandable way. Developed by students for students, we want to make everyday studying easier. Test LinSolve and give us feedback - we look forward to it! Your LinSolve team",
+    "aboutUsHeadline": "About us - The LinSolve team"}
