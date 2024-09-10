@@ -1,6 +1,6 @@
 <template>
     <Header></Header>
-    <Agbs></Agbs>
+    <Agbs class="mainContent"></Agbs>
     <Footer></Footer>
     </template>
     <script>
@@ -16,4 +16,8 @@
     }
     </script>
     <style>
+    .mainContent{
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
     </style>

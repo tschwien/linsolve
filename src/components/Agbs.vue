@@ -1,48 +1,99 @@
 <script>
-export default{
-    name: 'Agbs'
+export default {
+  name: 'Agbs'
 }
 </script>
+
 <template>
-    <div>
-        <h1>
-            Allgemeine Geschäftsbedingungen (AGB) für LinSolve
-        </h1>    
-        <p>
-1. Geltungsbereich 
-Diese Allgemeinen Geschäftsbedingungen (AGB) regeln die Nutzung der Website LinSolve und der damit verbundenen Dienstleistungen. Durch den Zugriff auf und die Nutzung der Website erklärst du dich mit den folgenden Bedingungen einverstanden.
+  <div>
+    <header>
+      <h1>{{ $t('gtcsHeadline') }}</h1>
+    </header>
 
-2. Nutzung der Website
-LinSolve ist eine Open-Source-Plattform, die Studierende bei der Lösung mathematischer Probleme im Bereich Operations Research (OR) unterstützt. Alle auf dieser Website zur Verfügung gestellten Inhalte und Tools dürfen kostenlos genutzt werden.
+    <section class="section">
+      <h2>1. {{ $t('scope') }} </h2>
+      <p>
+       {{ $t('scopeText') }}
+      </p>
+    </section>
 
-3. Open Source Lizenz 
-Der zugrunde liegende Code von LinSolve ist Open Source und unterliegt der [hier passende Open-Source-Lizenz einfügen, z.B. MIT-Lizenz]. Das bedeutet, dass du den Code herunterladen, modifizieren und weiterverbreiten kannst, solange die Bedingungen der jeweiligen Lizenz eingehalten werden. Für detaillierte Informationen zur Lizenz und deren Bedingungen lies bitte die entsprechende Dokumentation im Repository.
+    <section class="section">
+      <h2>2. {{ $t('⁠useOfTheWebsite') }} </h2>
+      <p>
+       {{ $t('⁠useOfTheWebsiteText') }}
+      </p>
+    </section>
 
-4. Haftungsausschluss
-LinSolve und die Entwickler übernehmen keine Haftung für die Richtigkeit, Vollständigkeit oder Aktualität der bereitgestellten Informationen und Berechnungen. Die Nutzung der Website erfolgt auf eigene Gefahr. Für mögliche Fehler oder Schäden, die durch die Nutzung der Plattform entstehen, übernehmen wir keine Verantwortung.
+    <section class="section">
+      <h2>3. {{ $t('⁠openSourceLicense') }} </h2>
+      <p>
+        {{ $t('openSourceLizenzText') }}
+      </p>
+    </section>
 
-5. Änderungen und Verfügbarkeit 
-Wir behalten uns das Recht vor, die Website jederzeit zu aktualisieren, zu verändern oder vorübergehend oder dauerhaft einzustellen. Für eventuelle Ausfallzeiten oder Datenverluste haften wir nicht.
+    <section class="section">
+      <h2>4. {{ $t('disclaimer') }} </h2>
+      <p>
+        {{ $t('disclaimerText') }}
+      </p>
+    </section>
 
-6. Datenschutz
-LinSolve erhebt keine personenbezogenen Daten, es sei denn, du kontaktierst uns freiwillig über Feedback-Formulare oder E-Mail. In diesem Fall werden die Daten ausschließlich zur Beantwortung deiner Anfragen genutzt und nicht an Dritte weitergegeben.
+    <section class="section">
+      <h2>5. {{ $t('changesAndAvailability') }} </h2>
+      <p>
+       {{ $t('changesAndAvailabilityText') }}
+      </p>
+    </section>
 
-7. Anwendbares Recht
-Diese AGB unterliegen dem deutschen Recht. 
+    <section class="section">
+      <h2>6. {{ $t('⁠dataProtection') }} </h2>
+      <p>
+        {{ $t('dataProtectionText') }}
+      </p>
+    </section>
 
-8. Kontakt
-Bei Fragen oder Feedback kannst du uns jederzeit unter [Kontakt-E-Mail] erreichen. 
-
-Mit der Nutzung von LinSolve erklärst du dich mit diesen AGB einverstanden.
-        </p>
-        <div class="Home">
-          <button class="mainButton"@click="">{{ $t('solve') }}</button>
-      </div>
+    <section class="section">
+      <h2>7.{{ $t('⁠applicableLaw')}} </h2>
+      <p>
+        {{ $t('⁠applicablaLawText') }}
+      </p>
+    </section>
+    <div class="action-container">
+      <button class="mainButton" @click="">{{ $t('solve') }}</button>
     </div>
+  </div>
 </template>
+
 <style>
-p {
-  font-size: 18px;
-  color: #333;
+
+h2{
+  font-size: medium;
+}
+
+h1{
+  font-size: large;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.action-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.mainButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.mainButton:hover {
+  background-color: #0056b3;
 }
 </style>
