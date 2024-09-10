@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+
 // Defining a new store to manage the state and actions related to optimization problems
 export const useOptimizationStore = defineStore('optimization', {
     // `state` function returns an object representing the reactive state of the store
@@ -26,6 +27,7 @@ export const useOptimizationStore = defineStore('optimization', {
         // Action to add a new constraint to the list of constraints
         addConstraint() {
             this.constraints.push({ id: Date.now(), content: '' });
+            
         },
 
         // Action to update the content of a specific constraint identified by its `id`

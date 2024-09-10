@@ -1,73 +1,99 @@
 <script>
-import 'mathlive'; 
-import { useOptimizationStore } from '../businesslogic/optimizationStore'; 
+import 'mathlive';
+import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import { computed } from 'vue';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 
 export default {
-    name: 'OptimizationProblemInput',
-  computed: {
-    highsSolver() {
-      return highsSolver
-    }
+  name: 'OptimizationProblemInput',
+  setup() {
+    const optimizationStore = useOptimizationStore();
+
+    mathVirtualKeyboard.layouts = ["compact"];
+
+    const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
+    const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
+
+    /**
+     * Generate LP in CPLEX-Format
+     * @returns {string} 
+     */
+    const generateLPContent = () => {
+      const objectiveType = optimizationStore.selectedOptimization === 'minimization' ? 'Minimize' : 'Maximize';
+      const objectiveFunction = optimizationStore.objectiveFunction || ''; 
+
+      let lpContent = `${objectiveType}\n obj: ${objectiveFunction}\nSubject To\n`;
+
+      // Constraints
+      optimizationStore.constraints.forEach((constraint, index) => {
+        lpContent += ` c${index + 1}: ${constraint.value}\n`;
+      });
+
+      lpContent += "Bounds\n"; // Adding Bounds
+      lpContent += "End\n";
+
+      return lpContent;
+    };
+
+    /**
+     * Solve LP
+     */
+    const solveLP = async () => {
+      try {
+        const lpContent = generateLPContent(); // Generate LP-Content
+        const result = await highsSolver.solveLP(lpContent); // Solve the LP
+        optimizationStore.updateSolution(result); // Store the result
+      } catch (error) {
+        console.error('Fehler beim Lösen des LP-Problems:', error);
+      }
+    };
+
+    return {
+      optimizationStore,
+      isMinimizationSelected,
+      isMaximizationSelected,
+      solveLP,
+    };
   },
-    setup() {
-       // Accessing the store for optimization-related data
-        const optimizationStore = useOptimizationStore();
-        // Configuring the MathLive virtual keyboard layout to use the "compact" option
-        mathVirtualKeyboard.layouts = ["compact"];
-        // Defining computed properties to determine whether the selected optimization is 'minimization' or 'maximization'
-        const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
-        const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
-        // Returning variables and computed properties to be used in the template or by other parts of the component
-        return {
-            optimizationStore, 
-            isMinimizationSelected, 
-            isMaximizationSelected, 
-        };
-    },
 };
 </script>
 
-
 <template>
-    <div class="inputContainer">
-        <div class="firstRow">
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMinimizationSelected }"
-                @click="optimizationStore.selectOptimization('minimization')">
-                {{ $t('minimization') }}
-            </button>
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMaximizationSelected }"
-                @click="optimizationStore.selectOptimization('maximization')">
-                {{ $t('maximization') }}
-            </button>
-        </div>
-
-        <div class="conditionContainer">
-            <math-field class="condition" :placeholder="$t('condition')"></math-field>
-        </div>
-
-        <div id="constraintContainer">
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field 
-                v-for="constraint in optimizationStore.constraints" 
-                :key="constraint.id"
-                class="constraint"
-                :placeholder="$t('constraint')"
-                @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-            </math-field>
-        </div>
-
-        <div class="lastRow">
-            <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-            <button class="mainButton" @click ="highsSolver.solveLP()">{{ $t('solve') }}</button>
-        </div>
+  <div class="inputContainer">
+    <div class="firstRow">
+      <button 
+        class="selectionOptimization" 
+        :class="{ selected: isMinimizationSelected }"
+        @click="optimizationStore.selectOptimization('minimization')">
+        {{ $t('minimization') }}
+      </button>
+      <button 
+        class="selectionOptimization" 
+        :class="{ selected: isMaximizationSelected }"
+        @click="optimizationStore.selectOptimization('maximization')">
+        {{ $t('maximization') }}
+      </button>
     </div>
+
+    <div class="conditionContainer">
+      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.objectiveFunction = $event.target.value" id="objectiveFunction"></math-field>
+    </div>
+
+    <div id="constraintContainer">
+      <math-field 
+        v-for="constraint in optimizationStore.constraints" 
+        :key="constraint.id"
+        class="constraint"
+        placeholder="Constraint"
+        @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      </math-field>
+    </div>
+
+    <div class="lastRow">
+      <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+      <button class="mainButton" @click="solveLP(cplexFormat)">{{ $t('solve') }}</button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
