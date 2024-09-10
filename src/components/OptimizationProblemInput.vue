@@ -69,7 +69,7 @@ export default {
 
       <div class="lastRow">
           <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-          <button class="mainButton">{{ $t('solve') }}</button>
+          <button class="mainButton"@click="">{{ $t('solve') }}</button>
       </div>
   </div>
 </template>
