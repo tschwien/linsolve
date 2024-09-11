@@ -55,6 +55,6 @@ describe('Component Test', () => {
         await button.trigger('click');
 
         // Check if the store action addConstraint was called
-        expect(optimizationStore.addConstraint).toHaveBeenCalledTimes(0);
+        expect(optimizationStore.addConstraint()).toHaveBeenCalledTimes(1);
     });
 });

@@ -1,20 +1,19 @@
-# Table of Contents
+# Linsolve
+
+## Table of Contents
 1. [General Information ](#general-information)
-2. [Technologies] (#technologies)
+2. [Dependencies](#Dependencies)
 3. [Getting Started](#getting-started)
-4. [Collaboration] (#collaboration)
+4. [Collaboration](#Collaboration)
 5. [FAQs](#faqs)
 
-# General Information
+## General Information
 ***
-This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as a solution aid for tasks in the field of Operations Research (OR).
+This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
 
 ## Screenshot
 
-## Contact
-If you have any questions, problems or suggestions, please contact the following e-mail address
-
-# Technologies
+# Dependencies
 *************
 A list of technologies used within the project:
 * [Vue](https://vuejs.org/): version ^3.4.37
@@ -27,7 +26,7 @@ A list of technologies used within the project:
 ## Prerequisities
 Make sure the following software is installed on your system:
 * npm (usually comes with Node.js)
-* Git (to clone the project from GitHub)
+
 
 
 
@@ -35,22 +34,35 @@ Make sure the following software is installed on your system:
 ## Installation
 Open your terminal and run the following command to clone the repository to your local machine:
 1. git clone https://github.com/JonaHesselmann/linsolve.git
-Change to the newly created project directory:
-2. cd linsolve
-To install all the necessary dependencies for the project, run the following command:
-3. npm install
-Once the dependencies are installed successfully, you can run the project in development:
-4. npm run dev 
-If you want to build the project for production, you can run the following command:
-5. npm run build
 
+2. change into the Project directory.
+To install all the necessary dependencies for the project, run the following command: 
+```bash
+npm install
+```
+3. Once the dependencies are installed successfully, you can run the project in development:
+```bash
+npm run dev 
+```
+If you want to build the project for production, you can run the following command: 
+```bash
+npm run build
+```
 
 ## Testing
-If you want to run the Tests, you need to open your Terminal an go to to the project folder an run the following command
-* npm test
-## Logging
+* Testing done Via Vitest unit tests
+* to run the tests use:
+```bash
+vitest
+```
+Or alternatively use:
+```bash
+npm test dev
+```
+## Collaboration
 
-## Docoumentaion
+
+## Documentation
 **********
 # FAQs
 **********
