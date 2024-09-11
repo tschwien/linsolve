@@ -92,7 +92,6 @@ async function solveLP(lpContent) {
   try {
     // Das LP-Modell in den Solver laden
     const result = await highs.solve(lpContent); // Löst das LP-Problem
-    displayResult(result);
     return result; // Ergebnis zurückgeben
   } catch (error) {
     console.error("Fehler beim Lösen des LP-Problems:", error);
@@ -104,16 +103,7 @@ async function solveLP(lpContent) {
  * Zeigt das Ergebnis des LP-Solvers an.
  * @param {Object} result - Das Ergebnis des LP-Solvers.
  */
-function displayResult(result) {
-  if (result) {
-    console.log("Lösungsstatus:", result.status || "Unbekannter Status");
-    console.log("Zielfunktionswert:", result.objectiveValue || "Kein Zielfunktionswert");
-    console.log("Primal-Lösung:", result.primalValues || "Keine Primal-Lösung");
-    console.log("Dual-Lösung:", result.dualValues || "Keine Dual-Lösung");
-  } else {
-    console.log("Kein Ergebnis verfügbar.");
-  }
-}
+
 
 export { solveLP, generateLPFile }; // Exportiert die Funktion zur Verwendung in anderen Modulen
 
