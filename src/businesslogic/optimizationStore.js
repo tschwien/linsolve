@@ -78,6 +78,9 @@ export const useOptimizationStore = defineStore('optimization', {
             }
             console.log(this.constraints[0]);
         },
+        deleteConstraint(){
+            this.constraints.pop()
+        },
 
     },
 });

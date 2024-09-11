@@ -8,6 +8,7 @@
     "condition": "Bedingung",
     "constraint": "Nebenbedingung", 
     "addConstraint": "Neue Nebenbedingung", 
-    "solve": "Lösen"
+    "solve": "Lösen", 
+    "optimizationType": "Art des Problems:"
 
 }

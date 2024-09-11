@@ -8,5 +8,6 @@
     "condition": "Condition",
     "constraint": "Constraint", 
     "addConstraint": "Add Constraint", 
-     "solve": "Solve"
+    "solve": "Solve",
+    "optimizationType":"Type of problem:"
 }
