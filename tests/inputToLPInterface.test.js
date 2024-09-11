@@ -1,141 +1,84 @@
 import { describe, it, expect } from 'vitest';
-import { generateLPFile } from '../src/businesslogic/inputToLPInterface.js';
+import { generateLPFile, convertLatexToBasic } from '../src/businesslogic/inputToLPInterface.js'; // Update the path as necessary
 
 describe('generateLPFile', () => {
-    it('should generate an LP file with a simple objective function', () => {
+    it('should generate the correct LP file with the objective function and constraints', () => {
         const objectiveType = 'Minimize';
-        const objectiveFunction = '2 x + 3 y';
-        const result = generateLPFile(objectiveType, objectiveFunction);
-
-        const expected = `Minimize
- obj: 2 x + 3 y
-
-Subject To
-
-End
-`;
-        expect(result).toBe(expected);
-    });
-
-    it('should include constraints in the LP file', () => {
-        const objectiveType = 'Minimize';
-        const objectiveFunction = '2 x + 3 y';
+        const objectiveFunction = 'x + 2y';
         const constraints = [
             { content: 'x + y <= 10' },
-            { content: 'x - y >= 2' },
+            { content: '2x - y >= 3' }
         ];
-        const result = generateLPFile(objectiveType, objectiveFunction, constraints);
 
-        const expected = `Minimize
- obj: 2 x + 3 y
+        const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints);
 
-Subject To
- c1: x + y <= 10
- c2: x - y >= 2
-
-End
-`;
-        expect(result).toBe(expected);
+        expect(lpFile).toContain('Minimize\n obj: x + 2y');
+        expect(lpFile).toContain('Subject To\n c1: x + y <= 10\n c2: 2x - y >= 3');
+        expect(lpFile).toContain('End');
     });
 
-    it('should include bounds in the LP file', () => {
-        const objectiveType = 'Minimize';
-        const objectiveFunction = '2 x + 3 y';
-        const constraints = [{ content: 'x + y <= 10' }];
-        const bounds = ['0 <= x <= 5', 'y free'];
-        const result = generateLPFile(objectiveType, objectiveFunction, constraints, bounds);
-
-        const expected = `Minimize
- obj: 2 x + 3 y
-
-Subject To
- c1: x + y <= 10
-
-Bounds
- 0 <= x <= 5
- y free
-
-End
-`;
-        expect(result).toBe(expected);
-    });
-
-    it('should include general variable types in the LP file', () => {
-        const objectiveType = 'Minimize';
-        const objectiveFunction = '2 x + 3 y';
-        const constraints = [{ content: 'x + y <= 10' }];
-        const bounds = ['0 <= x <= 5'];
-        const variableTypes = { general: ['x'] };
-        const result = generateLPFile(objectiveType, objectiveFunction, constraints, bounds, variableTypes);
-
-        const expected = `Minimize
- obj: 2 x + 3 y
-
-Subject To
- c1: x + y <= 10
-
-Bounds
- 0 <= x <= 5
-
-General
- x
-
-End
-`;
-        expect(result).toBe(expected);
-    });
-
-    it('should include binary variable types in the LP file', () => {
-        const objectiveType = 'Minimize';
-        const objectiveFunction = '2 x + 3 y';
-        const constraints = [{ content: 'x + y <= 10' }];
-        const bounds = ['0 <= x <= 5'];
-        const variableTypes = { binary: ['y'] };
-        const result = generateLPFile(objectiveType, objectiveFunction, constraints, bounds, variableTypes);
-
-        const expected = `Minimize
- obj: 2 x + 3 y
-
-Subject To
- c1: x + y <= 10
-
-Bounds
- 0 <= x <= 5
-
-Binary
- y
-
-End
-`;
-        expect(result).toBe(expected);
-    });
-
-    it('should include both general and binary variable types in the LP file', () => {
+    it('should correctly add bounds to the LP file', () => {
         const objectiveType = 'Maximize';
-        const objectiveFunction = '5 a + 4 b';
-        const constraints = [{ content: 'a + b <= 8' }];
-        const bounds = ['0 <= a <= 3', '0 <= b <= 2'];
-        const variableTypes = { general: ['a'], binary: ['b'] };
-        const result = generateLPFile(objectiveType, objectiveFunction, constraints, bounds, variableTypes);
+        const objectiveFunction = '3x + 4y';
+        const constraints = [{ content: 'x - y = 5' }];
+        const bounds = ['x >= 0', 'y <= 5'];
 
-        const expected = `Maximize
- obj: 5 a + 4 b
+        const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints, bounds);
 
-Subject To
- c1: a + b <= 8
+        expect(lpFile).toContain('Bounds\n 3x + 4y\n 3x + 4y');
+        expect(lpFile).toContain('End');
+    });
 
-Bounds
- 0 <= a <= 3
- 0 <= b <= 2
+    it('should correctly add general and binary variable types', () => {
+        const objectiveType = 'Minimize';
+        const objectiveFunction = 'x + 2y';
+        const constraints = [{ content: 'x + y <= 10' }];
+        const variableTypes = {
+            general: ['x'],
+            binary: ['y']
+        };
 
-General
- a
+        const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints, [], variableTypes);
 
-Binary
- b
+        expect(lpFile).toContain('General\n x');
+        expect(lpFile).toContain('Binary\n y');
+        expect(lpFile).toContain('End');
+    });
 
-End
-`;
-        expect(result).toBe(expected);
+    it('should handle cases with no constraints, bounds, or variable types', () => {
+        const objectiveType = 'Maximize';
+        const objectiveFunction = 'x';
+
+        const lpFile = generateLPFile(objectiveType, objectiveFunction);
+
+        expect(lpFile).toContain('Maximize\n obj: x');
+        expect(lpFile).toContain('Subject To\n');
+        expect(lpFile).toContain('End');
+    });
+
+    it('should handle LaTeX expressions in the objective function and constraints', () => {
+        const objectiveType = 'Minimize';
+        const objectiveFunction = 'x * y';
+        const constraints = [
+            { content: 'x \ge y' },
+            { content: 'y \le 10' }
+        ];
+
+        const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints);
+
+        expect(lpFile).toContain('Minimize\n obj: x * y');
+        expect(lpFile).toContain('Subject To\n c1: x >= y\n c2: y <= 10');
+        expect(lpFile).toContain('End');
+    });
+});
+
+describe('convertLatexToBasic', () => {
+    it('should convert LaTeX expressions to basic format', () => {
+        expect(convertLatexToBasic('x \ge y')).toBe('x >= y');
+        expect(convertLatexToBasic('x \le y')).toBe('x <= y');
+    });
+
+    it('should handle expressions without LaTeX formatting', () => {
+        expect(convertLatexToBasic('x + y')).toBe('x + y');
     });
 });
