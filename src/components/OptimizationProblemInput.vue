@@ -4,6 +4,7 @@ import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import { computed } from 'vue';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 
+
 export default {
   name: 'OptimizationProblemInput',
   setup() {
@@ -11,38 +12,23 @@ export default {
 
     mathVirtualKeyboard.layouts = ["compact"];
 
-    const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
-    const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
+    const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
+    const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
 
-    /**
-     * Generate LP in CPLEX-Format
-     * @returns {string} 
-     */
-    const generateLPContent = () => {
-      const objectiveType = optimizationStore.selectedOptimization === 'minimization' ? 'Minimize' : 'Maximize';
-      const objectiveFunction = optimizationStore.objectiveFunction || ''; 
-
-      let lpContent = `${objectiveType}\n obj: ${objectiveFunction}\nSubject To\n`;
-
-      // Constraints
-      optimizationStore.constraints.forEach((constraint, index) => {
-        lpContent += ` c${index + 1}: ${constraint.value}\n`;
-      });
-
-      lpContent += "Bounds\n"; // Adding Bounds
-      lpContent += "End\n";
-
-      return lpContent;
-    };
 
     /**
      * Solve LP
      */
     const solveLP = async () => {
       try {
-        const lpContent = generateLPContent(); // Generate LP-Content
+        let lpContent;
+        console.log(optimizationStore.selectedOptimization);
+        lpContent = highsSolver.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 5",
+          "0 <= x2 <= 10"],"")
+        console.log(lpContent);
         const result = await highsSolver.solveLP(lpContent); // Solve the LP
-        optimizationStore.updateSolution(result); // Store the result
+       console.log(result);
+       //TODO: Here we can apply the move to the solved results via router
       } catch (error) {
         console.error('Fehler beim Lösen des LP-Problems:', error);
       }
@@ -64,19 +50,19 @@ export default {
       <button 
         class="selectionOptimization" 
         :class="{ selected: isMinimizationSelected }"
-        @click="optimizationStore.selectOptimization('minimization')">
+        @click="optimizationStore.selectOptimization('Minimize')">
         {{ $t('minimization') }}
       </button>
       <button 
         class="selectionOptimization" 
         :class="{ selected: isMaximizationSelected }"
-        @click="optimizationStore.selectOptimization('maximization')">
+        @click="optimizationStore.selectOptimization('Maximize')">
         {{ $t('maximization') }}
       </button>
     </div>
 
     <div class="conditionContainer">
-      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.objectiveFunction = $event.target.value" id="objectiveFunction"></math-field>
+      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"></math-field>
     </div>
 
     <div id="constraintContainer">
@@ -91,7 +77,7 @@ export default {
 
     <div class="lastRow">
       <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-      <button class="mainButton" @click="solveLP(cplexFormat)">{{ $t('solve') }}</button>
+      <button class="mainButton" @click="solveLP()">{{ $t('solve') }}</button>
     </div>
   </div>
 </template>
