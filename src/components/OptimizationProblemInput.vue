@@ -3,6 +3,7 @@ import 'mathlive';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import { computed } from 'vue';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
+import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
 
 
 export default {
@@ -23,7 +24,7 @@ export default {
       try {
         let lpContent;
         console.log(optimizationStore.selectedOptimization);
-        lpContent = highsSolver.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 5",
+        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 5",
           "0 <= x2 <= 10"],"")
         console.log(lpContent);
         const result = await highsSolver.solveLP(lpContent); // Solve the LP
