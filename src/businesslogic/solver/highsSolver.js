@@ -1,6 +1,9 @@
 import highs_loader from "highs";
 
-// Lädt highs.js und initialisiert den Solver
+
+/**
+ * Läd den Solver
+ */
 let highs;
 (async () => {
     try {
@@ -87,7 +90,6 @@ const lpString = generateLPFile(objectiveType,objectiveFunction, constraints, bo
  * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn das Problem gelöst ist.
  */
 
-
 async function solveLP(lpContent) {
   try {
     // Das LP-Modell in den Solver laden
@@ -99,10 +101,6 @@ async function solveLP(lpContent) {
   }
 }
 
-/**
- * Zeigt das Ergebnis des LP-Solvers an.
- * @param {Object} result - Das Ergebnis des LP-Solvers.
- */
 
 
 export { solveLP, generateLPFile }; // Exportiert die Funktion zur Verwendung in anderen Modulen
