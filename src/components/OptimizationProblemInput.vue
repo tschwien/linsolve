@@ -1,67 +1,86 @@
 <script>
-import 'mathlive'; 
-import { useOptimizationStore } from '../businesslogic/optimizationStore'; 
-import { computed } from 'vue'; 
+import 'mathlive';
+import { useOptimizationStore } from '../businesslogic/optimizationStore';
+import { computed } from 'vue';
+import * as highsSolver from "../businesslogic/solver/highsSolver.js";
+import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
+
 
 export default {
-    name: 'OptimizationProblemInput', 
-    setup() {
-       // Accessing the store for optimization-related data
-        const optimizationStore = useOptimizationStore();
-        // Configuring the MathLive virtual keyboard layout to use the "compact" option
-        mathVirtualKeyboard.layouts = ["compact"];
-        // Defining computed properties to determine whether the selected optimization is 'minimization' or 'maximization'
-        const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'minimization');
-        const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'maximization');
-        // Returning variables and computed properties to be used in the template or by other parts of the component
-        return {
-            optimizationStore, 
-            isMinimizationSelected, 
-            isMaximizationSelected, 
-        };
-    },
+  name: 'OptimizationProblemInput',
+  setup() {
+    const optimizationStore = useOptimizationStore();
+
+    mathVirtualKeyboard.layouts = ["compact"];
+
+    const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
+    const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
+
+
+    /**
+     * Solve LP
+     */
+    const solveLP = async () => {
+      try {
+        let lpContent;
+        console.log(optimizationStore.selectedOptimization);
+        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 5",
+          "0 <= x2 <= 10"],"")
+        console.log(lpContent);
+        const result = await highsSolver.solveLP(lpContent); // Solve the LP
+       console.log(result);
+       //TODO: Here we can apply the move to the solved results via router
+      } catch (error) {
+        console.error('Fehler beim Lösen des LP-Problems:', error);
+      }
+    };
+
+    return {
+      optimizationStore,
+      isMinimizationSelected,
+      isMaximizationSelected,
+      solveLP,
+    };
+  },
 };
 </script>
 
-
 <template>
-    <div class="inputContainer">
-        <div class="firstRow">
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMinimizationSelected }"
-                @click="optimizationStore.selectOptimization('minimization')">
-                {{ $t('minimization') }}
-            </button>
-            <button 
-                class="selectionOptimization" 
-                :class="{ selected: isMaximizationSelected }"
-                @click="optimizationStore.selectOptimization('maximization')">
-                {{ $t('maximization') }}
-            </button>
-        </div>
-
-        <div class="conditionContainer">
-            <math-field class="condition" :placeholder="$t('condition')"></math-field>
-        </div>
-
-        <div id="constraintContainer">
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field class="constraint" :placeholder="$t('constraint')"></math-field>
-            <math-field 
-                v-for="constraint in optimizationStore.constraints" 
-                :key="constraint.id"
-                class="constraint"
-                :placeholder="$t('constraint')"
-                @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-            </math-field>
-        </div>
-
-        <div class="lastRow">
-            <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-            <button class="mainButton">{{ $t('solve') }}</button>
-        </div>
+  <div class="inputContainer">
+    <div class="firstRow">
+      <button 
+        class="selectionOptimization" 
+        :class="{ selected: isMinimizationSelected }"
+        @click="optimizationStore.selectOptimization('Minimize')">
+        {{ $t('minimization') }}
+      </button>
+      <button 
+        class="selectionOptimization" 
+        :class="{ selected: isMaximizationSelected }"
+        @click="optimizationStore.selectOptimization('Maximize')">
+        {{ $t('maximization') }}
+      </button>
     </div>
+
+    <div class="conditionContainer">
+      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"></math-field>
+    </div>
+
+    <div id="constraintContainer">
+      <math-field 
+        v-for="constraint in optimizationStore.constraints" 
+        :key="constraint.id"
+        class="constraint"
+        placeholder="Constraint"
+        @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      </math-field>
+    </div>
+
+    <div class="lastRow">
+      <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+      <button class="mainButton" @click="solveLP()">{{ $t('solve') }}</button>
+    </div>
+  </div>
 </template>
 
 <style scoped>

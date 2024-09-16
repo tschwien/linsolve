@@ -6,8 +6,8 @@
 <template>
     <footer class="footer">
         <a class="footer-link">{{ $t('documentation') }}</a>
-        <a class="footer-link">{{ $t('aboutUs') }}</a>
-        <a class="footer-link">{{ $t('gtcs') }}</a>
+        <router-link to="/about" class="footer-link">{{ $t('aboutUs') }}</router-link>
+        <router-link to="/agb" class="footer-link">{{ $t('gtcs') }}</router-link>
     </footer>
 </template>
 <style>

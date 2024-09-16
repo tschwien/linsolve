@@ -8,5 +8,25 @@
     "condition": "Condition",
     "constraint": "Constraint", 
     "addConstraint": "Add Constraint", 
-     "solve": "Solve"
+    "solve": "Solve",
+    "optimizationType":"Type of problem:", 
+    "aboutUsText":"Hi, we are Hannah, Jona, Tom and Nele, a team of 5th semester Business Informatics students at Lingen University of Applied Sciences. As part of our programming project, we have developed LinSolve - the platform that helps you with mathematical problems in the field of Operations Research (OR). Our mission? To solve OR problems quickly and easily - without complicated tools. LinSolve helps you with linear equations, optimization problems and more, in an understandable way. Developed by students for students, we want to make everyday studying easier. Test LinSolve and give us feedback - we look forward to it! Your LinSolve team",
+    "aboutUsHeadline": "About us - The LinSolve team", 
+    "gtcsHeadline": "General Terms and Conditions (GTC) for LinSolve", 
+    "scope": "Scope", 
+    "scopeText": "These General Terms and Conditions (GTC) govern the use of the LinSolve website and the associated services. By accessing and using the website, you agree to the following terms.",
+    "⁠useOfTheWebsite":" ⁠Use of the Website",
+    "⁠useOfTheWebsiteText": "LinSolve is an open-source platform that supports students in solving mathematical problems in the field of Operations Research (OR). All content and tools provided on this website may be used free of charge.", 
+    "openSourceLizenz": "Open Source Lizenz",
+    "openSourceLizenzText" : "The underlying code of LinSolve is open source and is subject to the [insert applicable open-source license, e.g., MIT license]. This means that you may download, modify, and redistribute the code as long as the conditions of the respective license are met. For detailed information on the license and its conditions, please refer to the corresponding documentation in the repository.", 
+    "disclaimer": "Disclaimer", 
+    "disclaimerText": "LinSolve and its developers assume no liability for the accuracy, completeness, or timeliness of the provided information and calculations. The use of the website is at your own risk. We accept no responsibility for possible errors or damages resulting from the use of the platform.", 
+    "changesAndAvailability": "⁠Changes and Availability", 
+    "changesAndAvailabilityText": "We reserve the right to update, modify, or temporarily or permanently discontinue the website at any time. We are not liable for any downtime or data loss.",
+    "⁠dataProtection":"Data Protection",
+    "dataProtectionText":"LinSolve does not collect personal data unless you voluntarily contact us via feedback forms. In this case, the data will only be used to respond to your inquiries and will not be shared with third parties.",
+    "⁠applicableLaw": "⁠Applicable Law",
+    "⁠applicablaLawText":"These GTC are governed by German law."
+     
+
 }

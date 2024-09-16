@@ -8,6 +8,23 @@
     "condition": "Bedingung",
     "constraint": "Nebenbedingung", 
     "addConstraint": "Neue Nebenbedingung", 
-    "solve": "Lösen"
-
+    "solve": "Lösen", 
+    "optimizationType": "Art des Problems:", 
+    "aboutUsText": "Hi! Wir sind Hannah, Jona, Tom und Nele, ein Team aus Wirtschaftsinformatik-Studierenden der Hochschule Lingen im 5. Semester. Im Rahmen unseres Programmierprojekts haben wir LinSolve entwickelt – die Plattform, die euch bei mathematischen Problemen im Bereich Operations Research (OR) unter die Arme greift. Unsere Mission? OR-Probleme schnell und einfach lösen – ohne komplizierte Tools. LinSolve hilft euch bei linearen Gleichungen, Optimierungsproblemen und mehr, und das auf verständliche Weise. Entwickelt von Studierenden für Studierende, wollen wir den Studienalltag erleichtern. Testet LinSolve und gebt uns Feedback – wir freuen uns drauf! Euer LinSolve-Team ",
+    "aboutUsHeadline": " Über uns – Das LinSolve-Team", 
+    "gtcsHeadline":"Allgemeine Geschäftsbedingungen (AGB) für LinSolve", 
+    "scope": "Geltungsbereich",
+    "scopeText": " Diese Allgemeinen Geschäftsbedingungen (AGB) regeln die Nutzung der Website LinSolve und der damit verbundenen Dienstleistungen. Durch den Zugriff auf und die Nutzung der Website erklärst du dich mit den folgenden Bedingungen einverstanden.",
+    "⁠useOfTheWebsite":"Nutzung der Website", 
+    "⁠useOfTheWebsiteText": " LinSolve ist eine Open-Source-Plattform, die Studierende bei der Lösung mathematischer Probleme im Bereich Operations Research (OR) unterstützt. Alle auf dieser Website zur Verfügung gestellten Inhalte und Tools dürfen kostenlos genutzt werden.", 
+    "⁠openSourceLicense" : "Open Source Lizenz", 
+    "openSourceLizenzText" : "Der zugrunde liegende Code von LinSolve ist Open Source und unterliegt der [hier passende Open-Source-Lizenz einfügen, z.B. MIT-Lizenz]. Das bedeutet, dass du den Code herunterladen, modifizieren und weiterverbreiten kannst, solange die Bedingungen der jeweiligen Lizenz eingehalten werden. Für detaillierte Informationen zur Lizenz und deren Bedingungen lies bitte die entsprechende Dokumentation im Repository.", 
+    "disclaimer": "Haftungsausschluss", 
+    "disclaimerText": "LinSolve und die Entwickler übernehmen keine Haftung für die Richtigkeit, Vollständigkeit oder Aktualität der bereitgestellten Informationen und Berechnungen. Die Nutzung der Website erfolgt auf eigene Gefahr. Für mögliche Fehler oder Schäden, die durch die Nutzung der Plattform entstehen, übernehmen wir keine Verantwortung.", 
+    "changesAndAvailability": "Änderungen und Verfügbarkeit", 
+    "changesAndAvailabilityText": " Wir behalten uns das Recht vor, die Website jederzeit zu aktualisieren, zu verändern oder vorübergehend oder dauerhaft einzustellen. Für eventuelle Ausfallzeiten oder Datenverluste haften wir nicht.",
+    "⁠dataProtection":"Datenschutz",
+    "dataProtectionText":"LinSolve erhebt keine personenbezogenen Daten, es sei denn, du kontaktierst uns freiwillig über Feedback-Formulare oder E-Mail. In diesem Fall werden die Daten ausschließlich zur Beantwortung deiner Anfragen genutzt und nicht an Dritte weitergegeben.", 
+    "⁠applicableLaw": "Anwendbares Recht", 
+    "⁠applicablaLawText": "Diese AGB unterliegen dem deutschen Recht."
 }

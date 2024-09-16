@@ -36,7 +36,7 @@ export default {
   <header class="header">
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
-    <p class="language">{{ $t('language') }}</p>
+    <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
     <div v-if="dropdown.isOpen" class="dropdown-menu">
        <p class="dropdown-link" @click="changeLocale('de')">Deutsch</p>
        <p class="dropdown-link" @click="changeLocale('en')">English</p>
