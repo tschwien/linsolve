@@ -21,3 +21,5 @@ let i18n = createI18n({
 
 // Exporting the i18n instance so it can be used across the application
 export default i18n; 
+
+//test
